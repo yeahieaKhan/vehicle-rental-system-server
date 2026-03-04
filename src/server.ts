@@ -8,6 +8,7 @@ import path from "path";
 
 import { initDB } from "./config/db";
 import { userRouter } from "./modules/user/user.router";
+import { vehicleRouter } from "./modules/vehicles/vehicles.router";
 dotenv.config({ path: path.join(process.cwd(), ".env") });
 
 const app = express();
@@ -23,6 +24,11 @@ app.use("/users",userRouter)
 app.use("/users/:id",userRouter)
 app.use("/users/:id",userRouter)
 app.use("/users/:id",userRouter)
+
+
+
+//
+app.use("/vehicles",vehicleRouter)
 
 
 

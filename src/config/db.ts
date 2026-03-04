@@ -14,7 +14,8 @@ export const pool = new Pool({
 // Initialize DB tables
 export const initDB = async () => {
   try {
-    const result = await pool.query(`
+    // Users Table
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY,
         name VARCHAR(250) NOT NULL,
@@ -27,8 +28,21 @@ export const initDB = async () => {
       )
     `);
 
-    console.log("DATABASE Connection successfully");
-    return result;
+    // Vehicles Table
+ await pool.query(`
+  CREATE TABLE IF NOT EXISTS vehicles(
+    id SERIAL PRIMARY KEY,
+    vehicle_name VARCHAR(250) NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    registration_number VARCHAR(100) UNIQUE NOT NULL,
+    daily_rent_price INT,
+    availability_status VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+  )
+`);
+
+    console.log("DATABASE Connected & Tables Ready ✅");
   } catch (error) {
     console.error("Error initializing DB:", error);
     throw error;
