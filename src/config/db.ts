@@ -19,13 +19,15 @@ export const initDB = async () => {
         id SERIAL PRIMARY KEY,
         name VARCHAR(250) NOT NULL,
         email VARCHAR(250) UNIQUE NOT NULL,
-        age INT,
+        password TEXT NOT NULL,
+        phone VARCHAR(20) UNIQUE NOT NULL,
+        role VARCHAR(20) DEFAULT 'customer',
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
       )
     `);
 
-    console.log("Users table checked/created successfully");
+    console.log("DATABASE Connection successfully");
     return result;
   } catch (error) {
     console.error("Error initializing DB:", error);

@@ -1,38 +1,41 @@
 import { Request, Response } from "express";
-import { userService } from "./user.service";
+import { createUserDB, userService } from "./user.service";
 
+// create users
 
-const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
-    const { name, email } = req.body;
-
-    if (!name || !email) {
-      return res.status(400).json({
-        success: false,
-        message: "Name and email are required",
-      });
-    }
-
-    const user = await userService.createUserDB(name, email);
+    const user = await createUserDB(req.body);
 
     res.status(201).json({
       success: true,
       message: "User created successfully",
-      data: user.rows
+      data: user,
     });
   } catch (error: any) {
-    console.error(error); // 🔥 see the real error in terminal
+    console.error(error);
+    if (error.code === "23505") {
+      // duplicate email/phone
+      return res.status(400).json({
+        success: false,
+        message: "Email or phone already exists",
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: "some error", // show actual DB error
+      message: error.message || "Internal Server Error",
     });
   }
 };
 
+
+
+// get all users data
 const getAllUser = async(req:Request,res:Response)=>{
 try{
     const result = await userService.getallUser();
-  res.status(500).json({
+  res.status(200).json({
     success:true,
     message:"Get user successfully",
     data:result.rows
@@ -73,8 +76,53 @@ const getSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+
+
+
+// updated single user
+
+const updatedUser = async(req:Request,res:Response)=>{
+  const{name,password,phone,role}= req.body;
+
+  try{
+    const result =await userService.updateSingleUserDb(name,password,phone,role,req.params.id as string);
+        if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // ✅ success response
+    return res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    // 🔴 server error
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
 export const createUsersController = {
   createUser,
   getAllUser,
-  getSingleUser
+  getSingleUser,
+  updatedUser
 };

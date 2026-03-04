@@ -1,11 +1,27 @@
 import { pool } from "../../config/db";
 
 
-
-const createUserDB = async (name:string,email:string) => {
-    const result = await pool.query(`INSERT INTO  users (name,email) VALUES ($1,$2) RETURNING *`, [name, email]);
-    return result;
+// Type-safe payload
+interface IUserPayload {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  role?: "customer" | "admin";
 }
+
+export const createUserDB = async (payload: IUserPayload) => {
+  const { name, email, password, phone, role = "customer" } = payload;
+
+  const result = await pool.query(
+    `INSERT INTO users (name, email, password, phone, role)
+     VALUES ($1, $2, $3, $4, $5)
+     RETURNING id, name, email, phone, role`,
+    [name, email.toLowerCase(), password, phone, role]
+  );
+
+  return result.rows[0]; // clean object
+};
 
 
 const getallUser = async()=>{
@@ -22,8 +38,27 @@ const getSingleuserDb =async (id:string)=>{
 }
 
 
+// update user information
+
+
+const updateSingleUserDb = async (name:string,password:string,phone:string,role:string,id:string)=>{
+   
+    const result = await pool.query(`
+        UPDATE users SET name=$1, password=$2,phone=$3,role=$4  WHERE id= $5 RETURNING * 
+        `,[name,password,phone,role,id]);
+
+        return result;
+}
+
+
+
+
+
+
+
 export const userService ={
     createUserDB,
     getallUser,
-    getSingleuserDb
+    getSingleuserDb,
+    updateSingleUserDb
 }

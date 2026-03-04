@@ -21,6 +21,7 @@ initDB();
 app.use("/users",userRouter)
 app.use("/users",userRouter)
 app.use("/users/:id",userRouter)
+app.use("/users/:id",userRouter)
 
 
 
