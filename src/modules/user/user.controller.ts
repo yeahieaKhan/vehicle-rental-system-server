@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userService } from "./user.service";
 
+
 const createUser = async (req: Request, res: Response) => {
   try {
     const { name, email } = req.body;
@@ -28,6 +29,26 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
+const getAllUser = async(req:Request,res:Response)=>{
+try{
+    const result = await userService.getallUser();
+  res.status(500).json({
+    success:true,
+    message:"Get user successfully",
+    data:result.rows
+  })
+}catch(error:any){
+   res.status(500).json({
+    success:true,
+    message:"Something went wrong",
+    
+  })
+}
+}
+
+
+
 export const createUsersController = {
   createUser,
+  getAllUser
 };

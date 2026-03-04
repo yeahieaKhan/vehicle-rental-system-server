@@ -5,8 +5,9 @@ import { Pool } from "pg";
 import dotenv from "dotenv";
 import path from "path";
 
-import { userRouter } from "./modules/user.router";
+
 import { initDB } from "./config/db";
+import { userRouter } from "./modules/user/user.router";
 dotenv.config({ path: path.join(process.cwd(), ".env") });
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 
 initDB();
+app.use("/users",userRouter)
 app.use("/users",userRouter)
 
 
