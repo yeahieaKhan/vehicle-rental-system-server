@@ -46,9 +46,35 @@ try{
 }
 }
 
+// get single user data
 
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.getSingleuserDb(req.params.id as string);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No data found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "User data fetched successfully",
+      data: result.rows[0],
+    });
+
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 export const createUsersController = {
   createUser,
-  getAllUser
+  getAllUser,
+  getSingleUser
 };
