@@ -21,7 +21,27 @@ const createVehicles = async (req: Request, res: Response) => {
   }
 };
 
+// all vehicls router
+
+const allVehiclsController = async(req:Request,res:Response)=>{
+  try{
+    const result = await vehicleService.allVehiclesDB();
+    res.status(200).json({
+      success:true,
+      message:"Vechicls Reading",
+      data:result.rows
+    })
+  }catch(error:any){
+    res.status(500).json({
+      success:false,
+      message:"Internal server error"
+    })
+  }
+}
+
+
 
 export const createVehiclesController = {
-    createVehicles
+    createVehicles,
+    allVehiclsController
 }

@@ -29,6 +29,7 @@ app.use("/users/:id",userRouter)
 
 //
 app.use("/vehicles",vehicleRouter)
+app.use("/vehicles",vehicleRouter)
 
 
 

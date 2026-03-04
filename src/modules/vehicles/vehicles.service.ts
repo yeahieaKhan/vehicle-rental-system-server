@@ -7,6 +7,14 @@ const createVehicles = async(payload:Record<string,unknown>)=>{
 }
 
 
+// get all vehicles 
+
+const allVehiclesDB = async()=>{
+    const result = await pool.query(`SELECT * FROM vehicles ORDER BY id DESC`)
+    return result;
+}
+
 export const vehicleService ={
     createVehicles,
+    allVehiclesDB,
 }
