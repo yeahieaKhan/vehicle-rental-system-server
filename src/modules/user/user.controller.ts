@@ -110,7 +110,34 @@ const updatedUser = async(req:Request,res:Response)=>{
 
 }
 
+// single user delete controller
 
+const singleUserDelete = async (req: Request, res: Response) => {
+  try {
+    const id  = req.params.id;
+
+    const result = await userService.deleteSingleUserDB(id as string);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+      data: result.rows[0],
+    });
+
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
 
 
 
@@ -124,5 +151,6 @@ export const createUsersController = {
   createUser,
   getAllUser,
   getSingleUser,
-  updatedUser
+  updatedUser,
+  singleUserDelete
 };

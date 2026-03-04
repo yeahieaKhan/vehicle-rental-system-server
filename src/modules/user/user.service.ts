@@ -52,6 +52,19 @@ const updateSingleUserDb = async (name:string,password:string,phone:string,role:
 
 
 
+// user delete
+
+const deleteSingleUserDB = async (id: string) => {
+  const result = await pool.query(
+    `DELETE FROM users 
+     WHERE id = $1 
+     RETURNING *`,
+    [id]
+  );
+
+  return result;
+};
+
 
 
 
@@ -60,5 +73,6 @@ export const userService ={
     createUserDB,
     getallUser,
     getSingleuserDb,
-    updateSingleUserDb
+    updateSingleUserDb,
+    deleteSingleUserDB
 }
