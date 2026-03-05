@@ -5,7 +5,6 @@ import { Pool } from "pg";
 import dotenv from "dotenv";
 import path from "path";
 
-
 import { initDB } from "./config/db";
 import { userRouter } from "./modules/user/user.router";
 import { vehicleRouter } from "./modules/vehicles/vehicles.router";
@@ -17,21 +16,17 @@ const port = 5000;
 // parser
 app.use(express.json());
 
-
 initDB();
-app.use("/users",userRouter)
-app.use("/users",userRouter)
-app.use("/users/:id",userRouter)
-app.use("/users/:id",userRouter)
-app.use("/users/:id",userRouter)
-
-
+app.use("/users", userRouter);
+app.use("/users", userRouter);
+app.use("/users/:id", userRouter);
+app.use("/users/:id", userRouter);
+app.use("/users/:id", userRouter);
 
 //
-app.use("/vehicles",vehicleRouter)
-app.use("/vehicles",vehicleRouter)
-
-
+app.use("/vehicles", vehicleRouter);
+app.use("/vehicles", vehicleRouter);
+app.use("/vehicles/:id", vehicleRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

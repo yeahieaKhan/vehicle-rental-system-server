@@ -1,20 +1,42 @@
 import { pool } from "../../config/db";
 
-const createVehicles = async(payload:Record<string,unknown>)=>{
-    const {vehicle_name,type,registration_number,daily_rent_price,availability_status}= payload;
-    const result = await pool.query(`INSERT INTO vehicles(vehicle_name,type,registration_number,daily_rent_price,availability_status) VALUES ($1,$2,$3,$4,$5)  RETURNING * `,[vehicle_name,type,registration_number,daily_rent_price,availability_status]);
-    return result;
-}
+const createVehicles = async (payload: Record<string, unknown>) => {
+  const {
+    vehicle_name,
+    type,
+    registration_number,
+    daily_rent_price,
+    availability_status,
+  } = payload;
+  const result = await pool.query(
+    `INSERT INTO vehicles(vehicle_name,type,registration_number,daily_rent_price,availability_status) VALUES ($1,$2,$3,$4,$5)  RETURNING * `,
+    [
+      vehicle_name,
+      type,
+      registration_number,
+      daily_rent_price,
+      availability_status,
+    ],
+  );
+  return result;
+};
 
+// get all vehicles
 
-// get all vehicles 
+const allVehiclesDB = async () => {
+  const result = await pool.query(`SELECT * FROM vehicles ORDER BY id DESC`);
+  return result;
+};
 
-const allVehiclesDB = async()=>{
-    const result = await pool.query(`SELECT * FROM vehicles ORDER BY id DESC`)
-    return result;
-}
+// get single vehicle
 
-export const vehicleService ={
-    createVehicles,
-    allVehiclesDB,
-}
+const singleVehicle = async (id: string) => {
+  const result = await pool.query(`SELECT * FROM vehicles WHERE id =$1`, [id]);
+  return result;
+};
+
+export const vehicleService = {
+  createVehicles,
+  allVehiclesDB,
+  singleVehicle,
+};
