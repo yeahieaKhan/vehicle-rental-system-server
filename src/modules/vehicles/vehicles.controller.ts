@@ -39,7 +39,7 @@ const allVehiclsController = async (req: Request, res: Response) => {
 
 const singleVehiclesController = async (req: Request, res: Response) => {
   try {
-    const result = await vehicleService.singleVehicle(req.params.id);
+    const result = await vehicleService.singleVehicle(req.params.id as string);
 
     res.status(200).json({
       success: true,
@@ -56,8 +56,49 @@ const singleVehiclesController = async (req: Request, res: Response) => {
   }
 };
 
+const updateSingleVehiclesC = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const result = await vehicleService.updateSingleVehicles(
+      id as string,
+      req.body,
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Vehicle updated successfully",
+      data: result.rows[0],
+    });
+  } catch (error: unknown) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+const deleteVehicls = async (req: Request, res: Response) => {
+  try {
+    const result = await vehicleService.deleteVehicles(req.params.id as string);
+    res.status(200).json({
+      success: true,
+      message: "Vehicls Delete successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
 export const createVehiclesController = {
   createVehicles,
   allVehiclsController,
   singleVehiclesController,
+  updateSingleVehiclesC,
+  deleteVehicls,
 };

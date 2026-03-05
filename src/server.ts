@@ -27,6 +27,8 @@ app.use("/users/:id", userRouter);
 app.use("/vehicles", vehicleRouter);
 app.use("/vehicles", vehicleRouter);
 app.use("/vehicles/:id", vehicleRouter);
+app.use("/vehicles/:id", vehicleRouter);
+app.use("/vehicles/:id", vehicleRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
