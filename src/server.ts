@@ -24,8 +24,8 @@ app.use("/users/:id", userRouter);
 app.use("/users/:id", userRouter);
 
 //
-app.use("/vehicles", vehicleRouter);
-app.use("/vehicles", vehicleRouter);
+app.use("/api/v1", vehicleRouter);
+app.use("/api/v1", vehicleRouter);
 app.use("/vehicles/:id", vehicleRouter);
 app.use("/vehicles/:id", vehicleRouter);
 app.use("/vehicles/:id", vehicleRouter);

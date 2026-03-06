@@ -2,8 +2,62 @@ import { Request, Response } from "express";
 import { pool } from "../../config/db";
 import { vehicleService } from "./vehicles.service";
 
+// const createVehicles = async (req: Request, res: Response) => {
+//   const {email}= req.body;
+
+//   try {
+
+
+//         // check if user already exists
+//     const existingUser = await pool.query(
+//       "SELECT * FROM users WHERE email = $1",
+//       [email]
+//     );
+
+//     if (existingUser.rows.length > 0) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User already exists",
+//       });
+//     }
+
+
+//     const result = await vehicleService.createVehicles(req.body);
+
+//     return res.status(201).json({
+//       success: true,
+//       message: "Vehicle created successfully",
+//       data: result.rows,
+//     });
+//   } catch (error: any) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "Internal server error",
+//     });
+//   }
+// };
+
+// all vehicls router
+
+
+
 const createVehicles = async (req: Request, res: Response) => {
+  const { registration_number } = req.body;
+
   try {
+
+    const existingVehicle = await pool.query(
+      "SELECT * FROM vehicles WHERE registration_number = $1",
+      [registration_number]
+    );
+
+    if (existingVehicle.rows.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Vehicle already exists",
+      });
+    }
+
     const result = await vehicleService.createVehicles(req.body);
 
     return res.status(201).json({
@@ -11,6 +65,7 @@ const createVehicles = async (req: Request, res: Response) => {
       message: "Vehicle created successfully",
       data: result.rows,
     });
+
   } catch (error: any) {
     return res.status(500).json({
       success: false,
@@ -19,7 +74,8 @@ const createVehicles = async (req: Request, res: Response) => {
   }
 };
 
-// all vehicls router
+
+
 
 const allVehiclsController = async (req: Request, res: Response) => {
   try {
