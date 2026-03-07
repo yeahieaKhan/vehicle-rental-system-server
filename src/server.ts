@@ -24,11 +24,11 @@ app.use("/users/:id", userRouter);
 app.use("/users/:id", userRouter);
 
 //
-app.use("/api/v1", vehicleRouter);
-app.use("/api/v1", vehicleRouter);
-app.use("/api/v1/:id", vehicleRouter);
-app.use("/vehicles/:id", vehicleRouter);
-app.use("/vehicles/:id", vehicleRouter);
+app.use("/api/v1/vehicles", vehicleRouter);
+app.use("/api/v1/vehicles", vehicleRouter);
+app.use("/api/v1/:vehicleId", vehicleRouter);
+app.use("/api/v1/vehicles/:vehicleId", vehicleRouter);
+app.use("/api/v1/vehicles/:vehicleId", vehicleRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

@@ -2,10 +2,10 @@ import express from "express";
 import { createVehiclesController } from "./vehicles.controller";
 
 const router = express.Router();
-router.post("/vehicles", createVehiclesController.createVehicles);
-router.get("/vehicles", createVehiclesController.allVehiclsController);
-router.get("/vehicles/:vehicleId", createVehiclesController.singleVehiclesController);
-router.put("/:id", createVehiclesController.updateSingleVehiclesC);
-router.delete("/:id", createVehiclesController.deleteVehicls);
+router.post("/", createVehiclesController.createVehicles);
+router.get("/", createVehiclesController.allVehiclsController);
+router.get("/:vehicleId", createVehiclesController.singleVehiclesController);
+router.put("/:vehicleId", createVehiclesController.updateSingleVehiclesC);
+router.delete("/:vehicleId", createVehiclesController.deleteVehicls);
 
 export const vehicleRouter = router;

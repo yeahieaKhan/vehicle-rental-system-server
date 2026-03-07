@@ -7,7 +7,6 @@ import { vehicleService } from "./vehicles.service";
 
 //   try {
 
-
 //         // check if user already exists
 //     const existingUser = await pool.query(
 //       "SELECT * FROM users WHERE email = $1",
@@ -20,7 +19,6 @@ import { vehicleService } from "./vehicles.service";
 //         message: "User already exists",
 //       });
 //     }
-
 
 //     const result = await vehicleService.createVehicles(req.body);
 
@@ -39,16 +37,13 @@ import { vehicleService } from "./vehicles.service";
 
 // all vehicls router
 
-
-
 const createVehicles = async (req: Request, res: Response) => {
   const { registration_number } = req.body;
 
   try {
-
     const existingVehicle = await pool.query(
       "SELECT * FROM vehicles WHERE registration_number = $1",
-      [registration_number]
+      [registration_number],
     );
 
     if (existingVehicle.rows.length > 0) {
@@ -65,7 +60,6 @@ const createVehicles = async (req: Request, res: Response) => {
       message: "Vehicle created successfully",
       data: result.rows,
     });
-
   } catch (error: any) {
     return res.status(500).json({
       success: false,
@@ -73,9 +67,6 @@ const createVehicles = async (req: Request, res: Response) => {
     });
   }
 };
-
-
-
 
 const allVehiclsController = async (req: Request, res: Response) => {
   try {
@@ -94,30 +85,30 @@ const allVehiclsController = async (req: Request, res: Response) => {
 };
 
 const singleVehiclesController = async (req: Request, res: Response) => {
+  const { vehicleId } = req.params;
   try {
-    const result = await vehicleService.singleVehicle(req.params.id as string);
+    const result = await vehicleService.singleVehicle(vehicleId as string);
 
     res.status(200).json({
       success: true,
       message: "Vehicle Reading",
       data: result.rows[0],
     });
-  } catch (error) {
-    console.error(error); // 👈 এটা যোগ করো
-
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error: error.message,
     });
   }
 };
 
 const updateSingleVehiclesC = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { vehicleId } = req.params;
 
     const result = await vehicleService.updateSingleVehicles(
-      id as string,
+      vehicleId as string,
       req.body,
     );
 
@@ -135,8 +126,9 @@ const updateSingleVehiclesC = async (req: Request, res: Response) => {
 };
 
 const deleteVehicls = async (req: Request, res: Response) => {
+  const { vehicleId } = req.params;
   try {
-    const result = await vehicleService.deleteVehicles(req.params.id as string);
+    const result = await vehicleService.deleteVehicles(vehicleId as string);
     res.status(200).json({
       success: true,
       message: "Vehicls Delete successfully",
