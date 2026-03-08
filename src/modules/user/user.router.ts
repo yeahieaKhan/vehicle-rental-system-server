@@ -6,9 +6,9 @@ import { createVehiclesController } from "../vehicles/vehicles.controller";
 const router = express.Router();
 router.post("/", createUsersController.createUser)
 router.get("/", createUsersController.getAllUser)
-router.get("/:id", createUsersController.getSingleUser)
-router.put("/:id", createUsersController.updatedUser)
-router.delete("/:id", createUsersController.singleUserDelete)
+router.get("/:userId", createUsersController.getSingleUser)
+router.put("/:userId", createUsersController.updatedUser)
+router.delete("/:userId", createUsersController.singleUserDelete)
 
 
 

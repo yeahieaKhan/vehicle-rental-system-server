@@ -17,11 +17,11 @@ const port = 5000;
 app.use(express.json());
 
 initDB();
-app.use("/users", userRouter);
-app.use("/users", userRouter);
-app.use("/users/:id", userRouter);
-app.use("/users/:id", userRouter);
-app.use("/users/:id", userRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/users/:userId", userRouter);
+app.use("/api/v1/users/:id", userRouter);
+app.use("/api/v1/users/:id", userRouter);
 
 //
 app.use("/api/v1/vehicles", vehicleRouter);

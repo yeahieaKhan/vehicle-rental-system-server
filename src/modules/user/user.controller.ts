@@ -52,8 +52,10 @@ try{
 // get single user data
 
 const getSingleUser = async (req: Request, res: Response) => {
+
+  const {userId}= req.params;
   try {
-    const result = await userService.getSingleuserDb(req.params.id as string);
+    const result = await userService.getSingleuserDb(userId as string);
 
     if (result.rows.length === 0) {
       return res.status(404).json({
