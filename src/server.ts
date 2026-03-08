@@ -34,7 +34,7 @@ app.use("/api/v1/vehicles/:vehicleId", vehicleRouter);
 
 
 
-// booking
+// booking all api
 
 app.use("/booking", bookingRouter)
 app.use("/booking", bookingRouter)
