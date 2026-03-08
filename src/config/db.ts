@@ -42,6 +42,40 @@ export const initDB = async () => {
   )
 `);
 
+
+// booking table
+
+await pool.query(`
+  CREATE TABLE IF NOT EXISTS bookings (
+    id SERIAL PRIMARY KEY,
+
+    customer_id INT NOT NULL,
+    vehicle_id INT NOT NULL,
+
+    rent_start_date DATE NOT NULL,
+    rent_end_date DATE NOT NULL,
+
+    total_price NUMERIC(10,2) NOT NULL CHECK (total_price > 0),
+
+    status VARCHAR(20) DEFAULT 'active' 
+    CHECK (status IN ('active','cancelled','returned')),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_customer
+        FOREIGN KEY(customer_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_vehicle
+        FOREIGN KEY(vehicle_id)
+        REFERENCES vehicles(id)
+        ON DELETE CASCADE,
+
+    CHECK (rent_end_date > rent_start_date)
+);
+  `)
+
     console.log("DATABASE Connected & Tables Ready ✅");
   } catch (error) {
     console.error("Error initializing DB:", error);
