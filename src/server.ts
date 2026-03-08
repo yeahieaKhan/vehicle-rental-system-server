@@ -37,6 +37,7 @@ app.use("/api/v1/vehicles/:vehicleId", vehicleRouter);
 // booking
 
 app.use("/booking", bookingRouter)
+app.use("/booking", bookingRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

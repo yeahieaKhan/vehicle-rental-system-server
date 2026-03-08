@@ -44,6 +44,15 @@ const createBookingBD = async (payload: Record<string, unknown>) => {
 };
 
 
+
+
+const getAllBooking = async ()=>{
+    const result = await pool.query(`SELECT * FROM bookings ORDER BY id DESC`);
+    return result;
+}
+
+
 export const bookingServiceBD ={
     createBookingBD,
+    getAllBooking,
 }

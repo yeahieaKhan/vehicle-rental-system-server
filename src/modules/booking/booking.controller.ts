@@ -24,6 +24,24 @@ const createBooking = async (req: Request, res: Response) => {
 
 };
 
+
+const getAllBooking = async (req:Request,res:Response)=>{
+     try {
+        const result = await bookingServiceBD.getAllBooking();
+        res.status(200).json({
+          success: true,
+          message: "Booking successfully",
+          data: result.rows,
+        });
+      } catch (error: any) {
+        res.status(500).json({
+          success: false,
+          message: "Internal server error",
+        });
+      }
+}
+
 export const createBookingController ={ 
-    createBooking
+    createBooking,
+    getAllBooking
 }
